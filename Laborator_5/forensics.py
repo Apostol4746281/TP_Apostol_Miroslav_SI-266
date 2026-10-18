@@ -29,8 +29,14 @@ exif = Image.open("probe/foto.jpg")._getexif() or {}
 for id, val in exif.items():
     print(TAGS.get(id, id), "=", val)
 
-if 34853 in exif:
-    print("GPS:", exif[34853])
+gps = exif.get(34853)
+if gps:
+    lat_dms = gps[2]
+    lon_dms = gps[4]
+    lat = float(lat_dms[0]) + float(lat_dms[1])/60 + float(lat_dms[2])/3600
+    lon = float(lon_dms[0]) + float(lon_dms[1])/60 + float(lon_dms[2])/3600
+    print("Latitudine:", round(lat, 6))
+    print("Longitudine:", round(lon, 6))
 
 # B4
 i = date.find(b"PK\x03\x04")

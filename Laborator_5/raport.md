@@ -9,6 +9,6 @@ Apostol Miroslav, SI-266
 ## Lucrarea B
 - Tipul real verificat cu magic bytes: foto.jpg este jpeg, iar ascuns.png este png.
 - Cu strings pe ascuns.png am gasit la final textul INDICIU:secret.txt.
-- In metadatele EXIF din foto.jpg am gasit modelul camerei Canon EOS 2000D si coordonatele GPS.
+- In metadatele EXIF din foto.jpg am extras blocul GPS (tag 34853) cu coordonatele: Latitudine 47.061389, Longitudine 28.866944.
 - Am extras arhiva zip de la coada fisierului ascuns.png si inauntru era secret.txt cu textul FLAG{arhiva_extrasa_prin_carving}.
 - Cu stego.py am ascuns si extras prin LSB din stego.png mesajul: FLAG{ascuns_in_pixeli}

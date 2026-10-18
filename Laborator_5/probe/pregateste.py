@@ -1,6 +1,7 @@
 ﻿import os, base64, hashlib, zipfile
 from urllib.parse import quote
 from PIL import Image
+import piexif
 
 os.makedirs("probe", exist_ok=True)
 
@@ -18,10 +19,14 @@ open("probe/wordlist.txt", "w", encoding="latin1").write("\n".join(cuvinte) + "\
 open("probe/hashuri.txt", "w").write(hashlib.md5(b"securitate").hexdigest() + "\n")
 
 img = Image.new("RGB", (200, 200), color=(70, 130, 180))
-ex = img.getexif()
-ex[271] = "Canon"
-ex[272] = "Canon EOS 2000D"
-img.save("probe/foto.jpg", "JPEG", exif=ex.tobytes())
+gps_ifd = {
+    piexif.GPSIFD.GPSLatitudeRef: b"N",
+    piexif.GPSIFD.GPSLatitude: ((47, 1), (3, 1), (41, 1)),
+    piexif.GPSIFD.GPSLongitudeRef: b"E",
+    piexif.GPSIFD.GPSLongitude: ((28, 1), (52, 1), (1, 1)),
+}
+exif_bytes = piexif.dump({"GPS": gps_ifd})
+img.save("probe/foto.jpg", "JPEG", exif=exif_bytes)
 
 img_png = Image.new("RGB", (120, 120), color=(34, 139, 34))
 img_png.save("probe/ascuns.png", "PNG")
